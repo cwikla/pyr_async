@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "TGP Async Library for doing background jobs with Redis"
   s.description = "TGP Async Library for doing background jobs with Redis"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.8"
