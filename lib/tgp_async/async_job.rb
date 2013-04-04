@@ -36,13 +36,15 @@ module TgpAsync
     end
 
     def self.push(obj, method_name)
-      super(:call_method => method_name, :clazz_name => obj.class.name, :id => obj.id)
+      super(:method_name => method_name, :clazz_name => obj.class.name, :id => obj.id)
     end
 
     def self.perform(msg)
+      puts msg.inspect
+
       method_name = msg["method_name"]
       clazz_name = msg["clazz_name"]
-      record_id = msg["record_id"]
+      record_id = msg["id"]
 
       if method_name.nil? || clazz_name.nil? || record_id.nil?
         puts "Missing method_name" if method_name.nil?
@@ -69,21 +71,23 @@ module TgpAsync
   end
 
 
-  module ActiveRecordExt
+  module AsyncAfter
     extend ActiveSupport::Concern
 
     included do
-      @@async_callbacks = {}
-
       after_create    :create_after_async_callbacks
       after_save      :save_after_async_callbacks
       after_destroy   :destroy_after_async_callbacks
     end
 
     module ClassMethods
+      def async_callbacks
+        @@the_async_callbacks ||= {}
+      end
+
       def async_add_after(cb_sym, *methods)
-        @@async_callbacks[cb_sym] ||= []
-        @@async_callbacks[cb_sym] += methods
+        async_callbacks[cb_sym] ||= []
+        async_callbacks[cb_sym] += methods
       end
 
       def async_after_create(*methods)
@@ -102,7 +106,7 @@ module TgpAsync
     protected
 
     def do_callbacks(method)
-      methods = @@async_callbacks[method]
+      methods = self.class.async_callbacks[method]
       return if methods.nil?
 
       methods.each do |m|
@@ -111,7 +115,7 @@ module TgpAsync
 
     end
 
-    def create_after_async_callbacks(method)
+    def create_after_async_callbacks
       do_callbacks(:create)
     end
 
