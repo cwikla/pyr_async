@@ -18,5 +18,4 @@ gem "jquery-rails"
 
 # move these once we make this a real gem
 
-gem 'resque'
 gem 'hirefire', :git => "https://github.com/TheGiantPixelCorporation/hirefire.git", :branch => "develop"

@@ -12,6 +12,7 @@ PATH
   specs:
     tgp_async (0.0.1)
       rails (~> 3.2.8)
+      resque
 
 GEM
   remote: http://rubygems.org/
@@ -129,5 +130,4 @@ PLATFORMS
 DEPENDENCIES
   hirefire!
   jquery-rails
-  resque
   tgp_async!
