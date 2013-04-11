@@ -47,9 +47,9 @@ module TgpAsync
       record_id = msg["id"]
 
       if method_name.nil? || clazz_name.nil? || record_id.nil?
-        puts "Missing method_name" if method_name.nil?
-        puts "Missing clazz_name" if clazz_name.nil?
-        puts "Missing record_id" if record_id.nil?
+        Rails.logger.debug "Missing method_name" if method_name.nil?
+        Rails.logger.debug "Missing clazz_name" if clazz_name.nil?
+        Rails.logger.debug "Missing record_id" if record_id.nil?
         return
       end
 
