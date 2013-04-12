@@ -1,9 +1,10 @@
 require 'resque'
 
-module TgpAsync
-  class AsyncJob
+module Tgp
+  module Async
+  class Job
     def self.use_redis?
-      @@async_on ||= TgpAsync::Engine.config.tgp_async_on
+      @@async_on ||= Tgp::Async::Engine.config.tgp_async_on
     end
 
     def self.queue
@@ -30,7 +31,7 @@ module TgpAsync
 
   end
 
-  class AfterAsyncJob < AsyncJob
+  class AfterAsyncJob < Tgp::Async::Job
     def self.queue
       :after_async_job
     end
@@ -127,5 +128,6 @@ module TgpAsync
       do_callbacks(:destroy)
     end
 
+  end
   end
 end

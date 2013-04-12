@@ -1,12 +1,12 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "tgp_async/version"
+require "tgp/async/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "tgp_async"
-  s.version     = TgpAsync::VERSION
+  s.version     = Tgp::Async::VERSION
   s.authors     = ["The Giant Pixel"]
   s.email       = ["code@thegiantpixel.com"]
   s.homepage    = "http://code.thegiantpixel.com"
