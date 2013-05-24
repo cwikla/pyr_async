@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["code@thegiantpixel.com"]
   s.homepage    = "http://code.thegiantpixel.com"
   s.summary     = "TGP Async Library for doing background jobs with Redis"
-  s.description = "TGP Async Library for doing background jobs with Redis"
+  s.description = "TGP Async Library for doing background jobs with Redis Description"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
