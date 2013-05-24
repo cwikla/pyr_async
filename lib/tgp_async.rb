@@ -1,4 +1,5 @@
 require "tgp/async/engine"
+require "tgp/async/version"
 
 module Tgp
   module Async
