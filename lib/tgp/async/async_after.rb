@@ -12,13 +12,20 @@ module Tgp
     end
 
     def self.push(options)
+t = DateTime.now.to_f
       if self.use_redis?
         puts "PUSHING THROUGH REDIS"
         Resque.enqueue(self, options)
+puts "A) #{DateTime.now.to_f - t}"
+t = DateTime.now.to_f
 
         if ::Resque::Job.workers <= 1 # hack
+puts "B) #{DateTime.now.to_f - t}"
+t = DateTime.now.to_f
           ::Resque::Job.environment.hire
         end
+puts "C) #{DateTime.now.to_f - t}"
+t = DateTime.now.to_f
 
       else
         self.send(:perform, options.as_json) # this makes the options a hash, which is what the perform clazzes are expecting
