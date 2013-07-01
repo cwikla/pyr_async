@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    tgp_async (0.1.5)
+    tgp_async (0.1.6)
       rails (~> 3.2.8)
       resque
 
