@@ -6,7 +6,7 @@ if defined?(HireFire)
   puts "MAX_HIREFIRE_WORKERS WILL BE #{MAX_HIREFIRE_WORKERS}"
 
   HireFire.configure do |config|
-    config.environment      = Rails.env.production? ? :heroku : :local
+    config.environment      = Rails.env.development? ? :local : :heroku
     config.max_workers      = MAX_HIREFIRE_WORKERS
     config.min_workers      = 0   # default is 0
     config.app_name         = TGP_HEROKU_APP_NAME
