@@ -5,10 +5,12 @@ if defined?(HireFire)
 
   puts "MAX_HIREFIRE_WORKERS WILL BE #{MAX_HIREFIRE_WORKERS}"
 
+  min_workers = defined?(MIN_HIREFIRE_WORKERS) ? MIN_HIREFIRE_WORKERS : 0
+
   HireFire.configure do |config|
     config.environment      = Rails.env.development? ? :local : :heroku
     config.max_workers      = MAX_HIREFIRE_WORKERS
-    config.min_workers      = 0   # default is 0
+    config.min_workers      = min_workers
     config.app_name         = TGP_HEROKU_APP_NAME
     config.job_worker_ratio = [
         { :jobs => 1,   :workers => [1, 1].max },
