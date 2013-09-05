@@ -3,9 +3,9 @@ if defined?(HireFire)
 
   MAX_HIREFIRE_WORKERS = Rails.env.production? ? (ENV['MAX_HIREFIRE_WORKERS'] || 9).to_i : 1
 
-  puts "MAX_HIREFIRE_WORKERS WILL BE #{MAX_HIREFIRE_WORKERS}"
-
   min_workers = defined?(MIN_HIREFIRE_WORKERS) ? MIN_HIREFIRE_WORKERS : 0
+  puts "MAX_HIREFIRE_WORKERS WILL BE #{MAX_HIREFIRE_WORKERS}"
+  puts "MIN_HIREFIRE_WORKERS WILL BE #{min_workers}"
 
   HireFire.configure do |config|
     config.environment      = Rails.env.development? ? :local : :heroku

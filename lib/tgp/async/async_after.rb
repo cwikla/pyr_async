@@ -16,9 +16,13 @@ module Tgp
         puts "PUSHING THROUGH REDIS"
         Resque.enqueue(self, options)
 
+=begin
+        This code was added initially when Audity was having trouble,
+        but may have been fixed when Cwikla took over HireFire
         if ::Resque::Job.workers <= 1 # hack
           ::Resque::Job.environment.hire
         end
+=end
 
       else
         self.send(:perform, options.as_json) # this makes the options a hash, which is what the perform clazzes are expecting
