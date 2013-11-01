@@ -1,7 +1,36 @@
 require 'resque'
 
-module Tgp
-  module Async
+module Tgp::Async
+  def self.async_on?
+    Tgp::Async::Engine.config.tgp_async_on
+  end
+
+  module MethodMissing
+    extend ActiveSupport::Concern
+
+    included do
+    end
+
+    module ClassMethods
+    end
+
+    def tgp_async_method_push_job(obj, method_name, *args)
+      Tgp::Async::AfterAsyncJob.push(self, method_name, *args)
+    end
+
+    def method_missing(method_name, *args, &block)
+      if method_name =~ /_async$/
+        orig = method_name.to_s.split(/_async$/)[0]
+        if self.respond_to? orig # this is our method
+          return tgp_async_method_push_job(self, orig, *args)
+        end
+      end
+
+      super
+    end
+
+  end
+
   class Job
     def self.use_redis?
       @@async_on ||= Tgp::Async::Engine.config.tgp_async_on
@@ -13,7 +42,7 @@ module Tgp
 
     def self.push(options)
       if self.use_redis?
-        puts "PUSHING THROUGH REDIS"
+        #puts "PUSHING THROUGH REDIS"
         Resque.enqueue(self, options)
 
         if ::Resque::Job.workers <= 1 # hack
@@ -36,37 +65,46 @@ module Tgp
       :after_async_job
     end
 
-    def self.push(obj, method_name)
-      super(:method_name => method_name, :clazz_name => obj.class.name, :id => obj.id)
+    def self.push(obj, method_name, *args)
+      super(:method_name => method_name, :clazz_name => obj.class.name, :id => obj.id, :args => args)
     end
 
     def self.perform(msg)
-      puts msg.inspect
+      Rails.logger.debug "MSG => #{msg.inspect}"
 
       method_name = msg["method_name"]
       clazz_name = msg["clazz_name"]
       record_id = msg["id"]
+      args = msg["args"]
 
       if method_name.nil? || clazz_name.nil? || record_id.nil?
         Rails.logger.debug "Missing method_name" if method_name.nil?
         Rails.logger.debug "Missing clazz_name" if clazz_name.nil?
         Rails.logger.debug "Missing record_id" if record_id.nil?
+        # no need to check for args
         return
       end
 
-      clazz = Kernel.const_get(clazz_name)
+      clazz = clazz_name.constantize
 
       if clazz.nil?
-        puts "Unable to find class #{clazz_name}"
+        Rails.logger.error "Unable to find class #{clazz_name}"
         return
       end
+
+      puts "METHOD NAME #{method_name} #{args}"
 
       begin
         obj = clazz.find(record_id)
-        obj.send(method_name)
+        puts "OBJ => #{obj.inspect}"
+        if args
+          obj.send(method_name, *args)
+        else
+          obj.send(method_name)
+        end
 
       rescue ActiveRecord::RecordNotFound => rnf
-        puts "Object #{clazz_name}/#{record_id} is no longer available"
+        Rails.logger.error "Object #{clazz_name}/#{record_id} is no longer available"
       end
     end
   end
@@ -128,6 +166,5 @@ module Tgp
       do_callbacks(:destroy)
     end
 
-  end
   end
 end
