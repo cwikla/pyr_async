@@ -96,11 +96,11 @@ module Tgp::Async
         return
       end
 
-      puts "METHOD NAME #{method_name} #{args}"
+      #puts "METHOD NAME #{method_name} #{args}"
 
       begin
         obj = clazz.find(record_id)
-        puts "OBJ => #{obj.inspect}"
+        #puts "OBJ => #{obj.inspect}"
         if args
           obj.send(method_name, *args)
         else
