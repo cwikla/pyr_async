@@ -1,22 +1,13 @@
-GIT
-  remote: https://github.com/TheGiantPixelCorporation/hirefire.git
-  revision: 3a87832ffcd2a36722e7934ba18e037480d8d4b5
-  branch: develop
-  specs:
-    hirefire (0.1.6)
-      heroku-api (~> 0.3.5)
-      rush (~> 0.6.7)
-
 PATH
   remote: .
   specs:
-    tgp_async (0.4.0)
+    tgp_async (0.4.2)
       rails (~> 3.2.8)
       resque
 
 GEM
-  remote: http://rubygems.org/
   remote: http://tgpgems:c3po42@gems.thegiantpixel.com/
+  remote: http://rubygems.org/
   specs:
     actionmailer (3.2.13)
       actionpack (= 3.2.13)
@@ -57,6 +48,9 @@ GEM
     heroku-api (0.3.9)
       excon (~> 0.20.1)
     hike (1.2.1)
+    hirefire (0.1.10)
+      heroku-api (~> 0.3.5)
+      rush (~> 0.6.7)
     httpclient (2.3.3)
     i18n (0.6.1)
     journey (1.0.4)
@@ -98,10 +92,10 @@ GEM
     rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
-    redis (3.0.4)
-    redis-namespace (1.3.0)
-      redis (~> 3.0.0)
-    resque (1.24.1)
+    redis (3.0.6)
+    redis-namespace (1.3.2)
+      redis (~> 3.0.4)
+    resque (1.25.1)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.2)
@@ -136,7 +130,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  hirefire!
+  hirefire
   jquery-rails
   tgp_async!
   tgp_gem

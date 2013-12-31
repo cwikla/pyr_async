@@ -1,5 +1,5 @@
-source "http://rubygems.org"
 source "http://tgpgems:c3po42@gems.thegiantpixel.com"
+source "http://rubygems.org"
 
 # Declare your gem's dependencies in tgp_async.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -20,4 +20,4 @@ gem "tgp_gem"
 
 # move these once we make this a real gem
 
-gem 'hirefire', :git => "https://github.com/TheGiantPixelCorporation/hirefire.git", :branch => "develop"
+gem 'hirefire'
