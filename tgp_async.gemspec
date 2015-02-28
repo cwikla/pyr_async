@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2.8"
   s.add_dependency "resque"
+  s.add_dependency "resque-scheduler"
 end

@@ -1,4 +1,5 @@
 require 'resque'
+require 'resque-scheduler'
 
 module Tgp::Async
   class BaseJob
@@ -15,19 +16,27 @@ module Tgp::Async
     end
 
     def self.push(options)
-      if self.is_async_on?
-        if self.use_redis?
+      if self.is_async_on? && self.use_redis?
           #puts "PUSHING THROUGH REDIS"
           Resque.enqueue(self, options)
+      else
+        self.send(:perform, options.as_json) # this makes the options a hash, which is what the perform clazzes are expecting
+      end
+    end
 
-=begin
-        This code was added initially when Audity was having trouble,
-        but may have been fixed when Cwikla took over HireFire
-        if ::Resque::Job.workers <= 1 # hack
-          ::Resque::Job.environment.hire
-        end
-=end
-        end
+    def self.enqueue_at(date_time, options)
+      if self.use_redis?
+        puts "Scheduling job for #{date_time}"
+        Resque.enqueue_at(date_time, self, options)
+      else
+        self.send(:perform, options.as_json) # this makes the options a hash, which is what the perform clazzes are expecting
+      end
+    end
+
+    def self.enqueue_in(interval, options)
+      if self.use_redis?
+        puts "Scheduling job for #{interval.to_i} seconds in the future"
+        Resque.enqueue_in(interval, self, options)
       else
         self.send(:perform, options.as_json) # this makes the options a hash, which is what the perform clazzes are expecting
       end
@@ -106,13 +115,13 @@ module Tgp::Async
 
       begin
         clazz = aq.clazz_name.constantize
-  
+
         obj = clazz.find(aq.obj_id)
         args = nil
         args = JSON.parse(aq.args) if !aq.args.blank?
-  
+
         #puts "OBJ => #{obj.inspect}"
-  
+
         if args
           obj.send(aq.method_name, *args)
         else
