@@ -26,7 +26,6 @@ module Tgp::Async
 
     def self.enqueue_at(date_time, options)
       if self.use_redis?
-        puts "Scheduling job for #{date_time}"
         Resque.enqueue_at(date_time, self, options)
       else
         self.send(:perform, options.as_json) # this makes the options a hash, which is what the perform clazzes are expecting
@@ -35,7 +34,6 @@ module Tgp::Async
 
     def self.enqueue_in(interval, options)
       if self.use_redis?
-        puts "Scheduling job for #{interval.to_i} seconds in the future"
         Resque.enqueue_in(interval, self, options)
       else
         self.send(:perform, options.as_json) # this makes the options a hash, which is what the perform clazzes are expecting
