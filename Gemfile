@@ -1,4 +1,3 @@
-source "http://tgpgems:c3po42@gems.thegiantpixel.com"
 source "http://rubygems.org"
 
 # Declare your gem's dependencies in tgp_async.gemspec.
@@ -8,7 +7,6 @@ gemspec
 
 # jquery-rails is used by the dummy application
 gem "jquery-rails"
-gem "tgp_gem"
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
@@ -20,4 +18,7 @@ gem "tgp_gem"
 
 # move these once we make this a real gem
 
-gem 'hirefire'
+source "http://tgpgems:c3po42@gems.thegiantpixel.com" do
+  gem "tgp_gem"
+  gem 'hirefire'
+end
