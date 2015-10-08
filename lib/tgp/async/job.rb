@@ -33,6 +33,14 @@ module Tgp::Async
       end
     end
 
+    def self.push_in(delta, options)
+      if self.is_async_on? && self.use_redis?
+        Resque::enqueue_in(delta, self, options)
+      else
+        self.push(options)
+      end
+    end
+
     def self.perform(msg)
       raise "Do something interesting here!"
     end
@@ -45,6 +53,10 @@ module Tgp::Async
 
     def self.push(obj, method_name, *args)
       super(:method_name => method_name, :clazz_name => obj.class.name, :id => obj.id, :args => args)
+    end
+
+    def self.push_in(time, obj, method_name, *args)
+      super(time, :method_name => method_name, :clazz_name => obj.class.name, :id => obj.id, :args => args)
     end
 
     def self.perform(msg)

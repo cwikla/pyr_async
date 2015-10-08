@@ -13,4 +13,8 @@ module Tgp::Async
     Tgp::Async::Engine.config.tgp_use_redis
   end
 
+  def self.queues
+    (Tgp::Async::Engine.config.tgp_async_queues || []) + [ :async_queue ]
+  end
+
 end
