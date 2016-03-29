@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 4.2.6"
   s.add_dependency "resque"
   s.add_dependency "resque-scheduler"
+  s.add_dependency "pyr_gem", "~> 3.0.0"
 end

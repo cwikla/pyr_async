@@ -20,6 +20,6 @@ gem "jquery-rails"
 # move these once we make this a real gem
 
 source "http://pyr:akbash42@gems.cwikla.com" do
-  gem "pyr_gem"
+  gem "pyr_gem", "~> 3.0.0"
   gem 'hirefire'
 end
