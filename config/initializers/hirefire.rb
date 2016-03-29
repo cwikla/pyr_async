@@ -11,7 +11,7 @@ if defined?(HireFire)
     config.environment      = Rails.env.development? ? :local : :heroku
     config.max_workers      = MAX_HIREFIRE_WORKERS
     config.min_workers      = min_workers
-    config.app_name         = TGP_HEROKU_APP_NAME
+    config.app_name         = PYR_HEROKU_APP_NAME
     config.job_worker_ratio = [
         { :jobs => 1,   :workers => [1, 1].max },
         { :jobs => 20,  :workers => [config.max_workers / 5, 1].max },

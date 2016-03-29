@@ -1,6 +1,6 @@
 require 'resque'
 
-module Tgp::Async
+module Pyr::Async
   module AsyncAfter
     extend ActiveSupport::Concern
 

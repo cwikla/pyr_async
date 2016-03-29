@@ -1,6 +1,6 @@
 REDIS_ENV_VAR = "REDISTOGO_URL"
 
-if Tgp::Async::Engine.config.tgp_async_on
+if Pyr::Async::Engine.config.pyr_async_on
   Resque.after_fork = Proc.new { 
     Resque.redis.client.reconnect
     ActiveRecord::Base.establish_connection 

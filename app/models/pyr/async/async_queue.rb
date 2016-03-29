@@ -1,4 +1,4 @@
-module Tgp
+module Pyr
   module Async
 
     class AsyncQueue < ActiveRecord::Base

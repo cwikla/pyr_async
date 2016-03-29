@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-# Declare your gem's dependencies in tgp_async.gemspec.
+# Declare your gem's dependencies in pyr_async.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 gemspec
@@ -19,7 +19,7 @@ gem "jquery-rails"
 
 # move these once we make this a real gem
 
-source "http://tgpgems:c3po42@gems.thegiantpixel.com" do
-  gem "tgp_gem"
+source "http://pyr:akbash42@gems.cwikla.com" do
+  gem "pyr_gem"
   gem 'hirefire'
 end

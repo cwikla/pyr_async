@@ -1,14 +1,14 @@
 require 'resque'
 require 'resque-scheduler'
 
-module Tgp::Async
+module Pyr::Async
   class BaseJob
     def self.is_async_on?
-      Tgp::Async::is_async_on?
+      Pyr::Async::is_async_on?
     end
 
     def self.use_redis?
-      Tgp::Async::use_redis?
+      Pyr::Async::use_redis?
     end
 
     def self.queue
@@ -53,7 +53,7 @@ module Tgp::Async
     end
   end
 
-  class AsyncJob < Tgp::Async::BaseJob
+  class AsyncJob < Pyr::Async::BaseJob
     def self.queue
       :async_job
     end
@@ -106,7 +106,7 @@ module Tgp::Async
     end
   end
 
-  class PersistentAsyncJob < Tgp::Async::BaseJob
+  class PersistentAsyncJob < Pyr::Async::BaseJob
     def self.push(obj, method_name, *args)
       aq_id = AsyncQueue.create(clazz_name: obj.class.name, obj_id: obj.id, method_name: method_name, args: args.to_json, status: :queued)
       super(:aq_id => aq_id.id)

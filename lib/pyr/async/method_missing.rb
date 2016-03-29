@@ -1,6 +1,6 @@
 require 'resque'
 
-module Tgp::Async
+module Pyr::Async
   module MethodMissing
     extend ActiveSupport::Concern
 
@@ -10,11 +10,11 @@ module Tgp::Async
     module ClassMethods
     end
 
-    def tgp_async_method_push_job(obj, method_name, *args)
-      if Tgp::Async::persist?
-        Tgp::Async::PersistentAsyncJob.push(self, method_name, *args)
+    def pyr_async_method_push_job(obj, method_name, *args)
+      if Pyr::Async::persist?
+        Pyr::Async::PersistentAsyncJob.push(self, method_name, *args)
       else
-        Tgp::Async::AsyncJob.push(self, method_name, *args)
+        Pyr::Async::AsyncJob.push(self, method_name, *args)
       end
     end
 
@@ -22,7 +22,7 @@ module Tgp::Async
       if method_name =~ /_async$/
         orig = method_name.to_s.split(/_async$/)[0]
         if self.respond_to? orig # this is our method
-          return tgp_async_method_push_job(self, orig, *args)
+          return pyr_async_method_push_job(self, orig, *args)
         end
       end
 

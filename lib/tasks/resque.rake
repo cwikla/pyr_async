@@ -26,7 +26,7 @@ task "jobs:work" => :environment do
   Dir[File.join(Rails.root, 'app/jobs/**/*.rb')].each do |path|
     require path
   end
-  all_async_queues = Tgp::Async::BaseJob.descendants.map(&:queue).uniq.join(',')
+  all_async_queues = Pyr::Async::BaseJob.descendants.map(&:queue).uniq.join(',')
   ENV['QUEUES'] = all_async_queues
 
   Rake::Task["resque:work"].invoke
