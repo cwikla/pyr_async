@@ -1,4 +1,4 @@
-if defined?(HireFire)
+if ENV['USE_HIRE_FIRE'] && defined?(HireFire)
   Rails.logger.info("Configuring HireFire")
 
   MAX_HIREFIRE_WORKERS = Rails.env.production? ? (ENV['MAX_HIREFIRE_WORKERS'] || 9).to_i : 1
