@@ -2,17 +2,6 @@ module Pyr
   module Async
 
     class AsyncQueue < ActiveRecord::Base
-      attr_accessible :deleted_at,
-        :queued_at,
-        :started_at,
-        :completed_at,
-        :failed_at,
-        :status,
-        :clazz_name,
-        :obj_id,
-        :method_name,
-        :args
-    
       before_save :check_ts_fields
     
       def check_ts_fields
