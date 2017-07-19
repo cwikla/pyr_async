@@ -1,4 +1,4 @@
-class CreateAsyncQueues < ActiveRecord::Migration
+class CreateAsyncQueues < ActiveRecord::Migration[5.1]
   def change
     create_table :async_queues do |t|
       t.timestamps
